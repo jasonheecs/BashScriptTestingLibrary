@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source ../bunit.shl
+source myScript.sh
+
+testSetScriptVarToFive () {
+    setScriptVarToFive
+    assertEquals 5 "$script_var"
+}
+
+testCreateSomeLogFile () {
+    createSomeLogFile
+    assertTrue "-f logfile.log"
+    assertEquals "Some Sample Text" "$(cat logfile.log)"
+}
+
+testStartMyProcess () {
+    startMyProcess
+    result=$(ps -ef | grep -v "grep" | grep /bin/bash | wc -l)
+    assertTrue " $result -gt 0 "
+}
+
+testTearDown () {
+    rm logfile.log
+}
+
+runUnitTests

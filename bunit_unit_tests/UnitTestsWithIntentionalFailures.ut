@@ -1,0 +1,219 @@
+#!/bin/bash
+
+source ../bunit.shl
+
+testSetup () {
+    touch testFile
+}
+
+testAssertEqualsWithStrings () {
+    assertEquals "something" "something"
+}
+
+
+testAssertEqualsWithIntegers () {
+    assertEquals 10 10
+}
+
+
+testAssertEqualsWithIntegers2 () {
+    assertEquals 5 $((10 - 5))
+}
+
+
+testAssertEqualsWithIntegers3 () {
+    assertEquals 1 1
+}
+
+
+testAssertEqualsWithDoubles () {
+    assertEquals 5.5 5.5
+}
+
+
+testAssertEqualsWithDoubles2 () {
+    assertEquals 5.5 5.50
+}
+
+
+testAssertEqualsWithArrays () {
+    local array1=(1,2,3)
+    local array2=(1,2,3)
+    assertEquals $array1 $array2
+}
+
+
+testAssertNotEqualsWithStrings () {
+    assertNotEquals "something" "something else"
+}
+
+
+testAssertNotEqualsWithIntegers () {
+    assertNotEquals 5 6
+}
+
+
+testAssertNotEqualsWithArrays () {
+    local array1=(1,2,3)
+    local array2=(4,5,6)
+    assertNotEquals $array1 $array2
+}
+
+
+testAssertNull () {
+    nullString=""
+    assertNull "$nullString"
+}
+
+
+testAssertTrueWithFilename () {
+    assertTrue  "-f \"testFile\""
+}
+
+
+testAssertTrueWithIntegers () {
+    assertTrue "10 = 10"
+}
+
+
+testAssertFalseWithIntegers () {
+    assertFalse "10 = 5"
+}
+
+
+testAssertFalseWithFilename () {
+    assertFalse  "-f \"testFile2\""
+}
+
+
+testAssertFalseWithArray () {
+    local array1=(1,2,3)
+    local array2=(4,5,6)
+    assertFalse "${array1} = ${array2}"
+}
+
+testAssertContainsWithString () {
+    local string="FooBar"
+    local substring="Bar"
+    assertContains $substring $string
+}
+
+testAssertContainsWithArray () {
+    local array1=(1,2,3)
+    local num2=2
+    assertContains $num2 $array1
+}
+
+testAssertEqualsWithStringsFailure () {
+    assertEquals "something" "something else"
+}
+
+
+testAssertEqualsWithIntegersFailure () {
+    assertEquals 5 10
+}
+
+
+testAssertEqualsWithArraysFailure () {
+    local array1=(1,2,3)
+    local array2=(4,5,6)
+    assertEquals $array1 $array2
+}
+
+
+testAssertNotEqualsWithIntegersFailure () {
+    assertNotEquals 5 5
+}
+
+
+testAssertNotEqualsWithStringsFailure () {
+    assertNotEquals "same" "same"
+}
+
+
+testAssertNotEqualsWithArrayFailure () {
+    local array1=(1,2,3)
+    local array2=(1,2,3)
+    assertNotEquals $array1 $array2
+}
+
+
+testAssertNullWithIntegerFailure () {
+    assertNull 5
+}
+
+
+testAssertNullWithStringFailure () {
+    assertNull "something"
+}
+
+
+testAssertNullWithArrayFailure () {
+    local array1=(1,2,3)
+    assertNull $array1
+}
+
+
+testAssertTrueWithFilenameFailure () {
+    assertTrue  "-f \"testFile2\""
+}
+
+
+testAssertTrueWithIntegersFailure () {
+    assertTrue  "10 = 5"
+}
+
+
+testAssertFalseWithFilenameFailure () {
+    assertFalse "-f \"testFile\""
+}
+
+testAssertFalseWithIntegersFailure () {
+    assertFalse "10 = 10"
+}
+
+testAssertContainsWithStringsFailure () {
+    local string="FooBar"
+    local substring="BarBar"
+    assertContains $substring $string
+}
+
+testAssertContainsWithArrayFailure () {
+    local array1=(4,5,6)
+    local num2=7
+    assertContains $num2 $array1
+}
+
+testAssertEqualsWrongArgsNum() {
+    assertEquals "something"
+}
+
+testAssertNotEqualsWrongArgsNum() {
+    assertNotEquals 20
+}
+
+testAssertNullWrongArgsNum() {
+    assertNull
+}
+
+testAssertTrueWrongArgsNum() {
+    assertTrue
+}
+
+testAssertFalseWrongArgsNum() {
+    assertFalse
+}
+
+testAssertContainsWrongArgsNum() {
+    assertContains "Foo"
+}
+
+function testAssertNotEqualsWithStringsFunction() {
+    assertEquals "something" "something else"
+}
+
+testTeardown () {
+    rm testFile
+}
+
+runUnitTests
