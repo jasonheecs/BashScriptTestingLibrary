@@ -7,12 +7,18 @@ addons:
   apt:
     sources:
     - debian-sid    # Grab shellcheck from the Debian repo
-    packages:
-    - shellcheck
 
+before-script:
+  - sudo apt-get install cabal-install
+  - cabal update
+  - cabal install shellcheck
 script:
- - bash -c 'shopt -s globstar; shellcheck **/*.shl; shellcheck ./bunit_unit_tests/*.ut'
- - cd bunit_unit_tests && bash UnitTestsWithNoFailures.ut -v
+  - bash -c 'shopt -s globstar; shellcheck **/*.shl; shellcheck ./bunit_unit_tests/*.ut'
+  - cd bunit_unit_tests && bash UnitTestsWithNoFailures.ut -v
+
+cache:
+  directories:
+    - ~/.cabal
 
 matrix:
   fast_finish: true
